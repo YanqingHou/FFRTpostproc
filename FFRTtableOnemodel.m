@@ -46,10 +46,10 @@ strongm=[1:5:16]; mediumm=[2,3,7,8,12,13,17,18]; weakm=[4,5,9,10,14,15,19,20];
 %             SatModel=GBDF;
 % %             modelfiles=weakm;           
 %     end
-%     modelfiles=[];
+%     modelfiles=[];[GSF(weakm),BSF(weakm)]%,BSF]
     for filei=[GBDF(mediumm),GBDF(weakm)]%SatModel([mediumm])%BTF%(modelfiles)
         filename=opts(filei).filename;%fgetl(fidfs)
-        filenametxt=strcat('FFRT_',filename,'.txt');
+        filenametxt=strcat('../FFRT_',filename,'.txt');
         if ~exist(filenametxt,'file')
             continue;
         end
@@ -59,7 +59,7 @@ strongm=[1:5:16]; mediumm=[2,3,7,8,12,13,17,18]; weakm=[4,5,9,10,14,15,19,20];
         end
         %     figure(1);
         
-        for ifig=1:Pfslen%15%
+        for ifig=6%1:Pfslen%15%
             Pfreq=Pfs(ifig);
             Pfreqrows=resep(:,ffrtclnPf_req)==Pfreq;
             resepa=resep(Pfreqrows,:);
@@ -109,7 +109,7 @@ clear resep; clear resepa; clear resepb; clear nsrows; clear posiPfixrows; clear
 % % figure(1);
 % cmin=1;cmax=50;
 myfitgroup=cell(maxns,Pfslen);
-for ifig=1:Pfslen%15%[1,6,10,15]%
+for ifig=6%1:Pfslen%15%[1,6,10,15]%
 %     figure(ifig);
 %     for imodel=1:3
 %     subplot(2,3,imodel);
@@ -165,31 +165,40 @@ for ifig=1:Pfslen%15%[1,6,10,15]%
 %  [fitres,gofit]=Fit_PfILS_mu(minPf_ILS, minmu)
     % ffrtclnep=1;ffrtclnna=2;ffrtclnns=3;ffrtclnPsb=4;ffrtclnPsILS=5;ffrtclnPf_req=6;
     % ffrtclnmu=7;ffrtclnPfix=8;ffrtclnPscon=9; ffrtclnPftrue=10;
-    %     subplot(4,4,ifig);
-%     xlim([0,1]);
-%     ylim([0,1]);
+%         subplot(2,3,imodel);
+close all;
+figure; 
+    subplot(2,1,1);
+    scatter(1-PfPfix{ifig,1}(:,ffrtclnPsILS),PfPfix{ifig,1}(:,ffrtclnmu),5,PfPfix{ifig,1}(:,ffrtclnns),'filled'); colorbar; hold off;
+
+    xlim([0,1]);
+    ylim([0,1]);
 % %     caxis([cmin,cmax]);
 %     end
 %     titletxt=strcat('GPS+BDS Dual, P_f^t^o^l=',num2str(Pfs(ifig)));
 %     title(titletxt,'FontSize',fontsize);
 %     xlabel('Pf,ILS','FontSize',fontsize);
 %     ylabel('\mu','FontSize',fontsize);
-%     set(gca,'FontSize',fontsize);
-%     subplot(2,1,2);
+    xlabel('$P_{f,ILS}$','interpreter','Latex','FontSize',fontsize);
+    ylabel('$\mu$','interpreter','Latex','FontSize',fontsize);
+    title('Single GNSS');
+    set(gca,'FontSize',fontsize);
+    subplot(2,1,2);
 %     subplot(2,3,imodel+3);
-%     scatter(1-PfPfix{ifig,1}(:,ffrtclnPsILS),PfPfix{ifig,1}(:,ffrtclnPfix),5,PfPfix{ifig,1}(:,ffrtclnns),'filled'); colorbar; %hold on;
-%     xlim([0,1]);
-%     ylim([0,1]);
+    scatter(1-PfPfix{ifig,1}(:,ffrtclnPsILS),PfPfix{ifig,1}(:,ffrtclnPfix),5,PfPfix{ifig,1}(:,ffrtclnns),'filled'); colorbar; %hold on;
+    xlim([0,1]);
+    ylim([0,1]);
 %     caxis([cmin,cmax]);
 % 
-%     xlabel('Pf,ILS','FontSize',fontsize);
-% %     ylabel('P_f_i_x','FontSize',fontsize);
-%     set(gca,'FontSize',fontsize);
+    xlabel('$P_{f,ILS}$','interpreter','Latex','FontSize',fontsize);
+    ylabel('$P_{fix}$','interpreter','Latex','FontSize',fontsize);
+    set(gca,'FontSize',fontsize);
     
     %     hold off;
 %     set(gcf,'units','normalized','outerposition',[0 0 1 1]);
-%     colormap hsv;%jet;
+     colormap hsv;%jet;
 
 end
-save('myfitgroupAllPftol','myfitgroup');
+
+% save('myfitgroupAllPftol','myfitgroup');
 

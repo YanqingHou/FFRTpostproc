@@ -130,20 +130,22 @@ grid on
 [xData, yData] = prepareCurveData( Pf, Pfix );
 
 % Set up fittype and options.
-ft = fittype( 'fourier1' );
+% ft = fittype( 'fourier1' );
+ft = fittype( 'power2' );
+
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
-opts.StartPoint = [0 0 0 33.1881750854616];
+% opts.StartPoint = [0 0 0 33.1881750854616];
 
 % Fit model to data.
 [fitresult{3}, gof(3)] = fit( xData, yData, ft, opts );
 
 % Plot fit with data.
 subplot(2,2,3);
-title('fourier1');
+title('power2');
 % figure( 'Name', 'Fourier1' );
 h = plot( fitresult{3}, xData, yData );
-legend( h, 'Pfix vs. Pf', 'Fourier1', 'Location', 'SouthWest' );
+legend( h, 'Pfix vs. Pf', 'power2', 'Location', 'SouthWest' );
 paravalues=coeffvalues(fitresult{3});
 parabnds=confint(fitresult{3});
 % legend( h, '\mu_m_i_n vs. P_f_,_I_L_S', 'y=a*x^b+c', 'Lower bounds', 'Upper bounds','Location', 'SouthWest' );
@@ -153,7 +155,7 @@ ylabel ('Pfix');
 str1=strcat('a= ',num2str(paravalues(1)),', 95% [',num2str(parabnds(1,1)),',',num2str(parabnds(2,1)),' ]');
 str2=strcat('b= ',num2str(paravalues(2)),', 95% [',num2str(parabnds(1,2)),',',num2str(parabnds(2,2)),' ]');
 str3=strcat('c= ',num2str(paravalues(3)),', 95% [',num2str(parabnds(1,3)),',',num2str(parabnds(2,3)),' ]');
-str4=strcat('d= ',num2str(paravalues(4)),', 95% [',num2str(parabnds(1,4)),',',num2str(parabnds(2,4)),' ]');
+% str4=strcat('d= ',num2str(paravalues(4)),', 95% [',num2str(parabnds(1,4)),',',num2str(parabnds(2,4)),' ]');
 
 str5=strcat('SSE: ',num2str(gof(3).sse));
 str6=strcat('ad R^2: ',num2str(gof(3).adjrsquare));
@@ -163,7 +165,7 @@ str7=strcat('RMSE: ',num2str(gof(3).rmse));
 text(txtposx,txtposy,str1); 
 text(txtposx,txtposy-txtwidth,str2);
 text(txtposx,txtposy-2*txtwidth,str3);
-text(txtposx,txtposy-3*txtwidth,str4);
+% text(txtposx,txtposy-3*txtwidth,str4);
 text(txtposx,txtposy-4*txtwidth,str5);
 text(txtposx,txtposy-5*txtwidth,str6);
 text(txtposx,txtposy-6*txtwidth,str7);

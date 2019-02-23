@@ -87,7 +87,7 @@ clear resep; clear resepa; clear resepb; clear nsrows; clear posiPfixrows; clear
 stdofpfix= NaN(3,maxns);
 % % figure(1);
 % cmin=1;cmax=50;
-for ifig=15%[1,6,10,15]%1:Pfslen
+for ifig=6%15%[1,6,10,15]%1:Pfslen
     figure(ifig);
 %     imodel=2;
     for imodel=1:3
